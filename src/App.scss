@@ -1,0 +1,54 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #081d38;
+  color: #fff;
+  font-size: 1.6rem;
+
+  &-header {
+    padding: 2rem 0;
+    background: #334966;
+
+    & > .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__menu {
+      display: flex;
+
+      & li {
+        
+        &:not(:first-of-type) {
+          margin-left: 1rem;
+        }
+      }
+    }
+
+    &__logo {
+      font-size: 2.8rem;
+      font-weight: 600;
+    }
+
+    
+  }
+}
+
+
+
+footer {
+  padding: 1rem;
+  margin-top: auto;
+  background: #334966;
+  font-size: 1.2rem;
+
+  & > .container {
+    display: flex;
+  }
+
+  .copyright {
+    margin-left: auto;
+  }
+}
