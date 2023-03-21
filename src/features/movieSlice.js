@@ -7,14 +7,25 @@ const initialState = {
   filteredMovies: [],
   genres: [], // а нужно ли?
   loading: false,
-  fetching: true
+  fetching: true,
+  currentPage: 1,
+  recommendations: []
 }
 
 export const getMovies = createAsyncThunk(
   'movies/getMovies',
-  async (currentPage, {rejectWithValue, dispatch}) => {
+  async (currentPage, { rejectWithValue, dispatch }) => {
+    console.log(currentPage)
     const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US&page=${currentPage}`)
-    dispatch(setMovies(res.data))
+    currentPage === 1 ? dispatch(setMovies(res.data)) :  dispatch(updateMovies(res.data))
+  }
+)
+
+export const getRecommendations = createAsyncThunk(
+  'movies/getRecommendations',
+  async (movie_id, { rejectWithValue, dispatch }) => {
+    const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/recommendations?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US&page=1`)
+    dispatch(setRecommendations(res.data))
   }
 )
 
@@ -31,13 +42,12 @@ export const movieSlice = createSlice({
   initialState,
   reducers: {
     setMovies: (state, action) => {
-      console.log('start', state.movies)
-      state.movies.push(...action.payload.results)
-      state.filteredMovies.push(...action.payload.results)
-      // state.movies = [...state.movies, ...action.payload.results]
-      // state.filteredMovies = [...state.filteredMovies, ...action.payload.results]
-      console.log('end', state.movies)
-      // state.filteredMovies = action.payload.results
+      state.movies = action.payload.results
+      state.filteredMovies = action.payload.results
+    },
+    updateMovies: (state, action) => {
+      state.movies = [...state.movies, ...action.payload.results]
+      state.filteredMovies = [...state.filteredMovies, ...action.payload.results]
     },
     searchMovies: (state, action) => {
       state.filteredMovies = state.movies.filter(function(item, index) {
@@ -50,7 +60,13 @@ export const movieSlice = createSlice({
     },
     setFetching: (state, action) => {
       state.fetching = action.payload;
-    }
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = state.currentPage + 1
+    },
+    setRecommendations: (state, action) => {
+      state.recommendations = action.payload.results
+    },
   },
   extraReducers: {
     [getMovies.fulfilled]: (state) => {
@@ -66,40 +82,5 @@ export const movieSlice = createSlice({
   }
 })
 
-export const {setMovies, searchMovies, setGenres, setFetching} = movieSlice.actions
+export const {setMovies, updateMovies, searchMovies, setGenres, setFetching, setCurrentPage, setRecommendations} = movieSlice.actions
 export default movieSlice.reducer
-
-
-
-
-
-
-
-
-// export const slice = createSlice({
-//   name: 'myData',
-//   initialState: {
-//     data: [],
-//     isLoading: false,
-//     hasError: false,
-//     currentPage: 1,
-//     totalPages: 0,
-//   },
-//   reducers: {
-//     fetchDataStart: (state) => {
-//       state.isLoading = true;
-//       state.hasError = false;
-//     },
-//     fetchDataSuccess: (state, action) => {
-//       state.isLoading = false;
-//       state.hasError = false;
-//       state.data = [...state.data, ...action.payload.results];
-//       state.currentPage = action.payload.page;
-//       state.totalPages = action.payload.total_pages;
-//     },
-//     fetchDataFailure: (state) => {
-//       state.isLoading = false;
-//       state.hasError = true;
-//     },
-//   },
-// });

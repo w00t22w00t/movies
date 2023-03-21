@@ -5,25 +5,27 @@ import { getMovies, getGenres } from "../features/movieSlice";
 
 const FavoritesPage = () => {
   const dispatch = useDispatch()
-  const {movies} = useSelector(state => state.movies)
+  // const {movies, favList} = useSelector(state => state.movies)
 
   useEffect(() => {
-    dispatch(getMovies())
     dispatch(getGenres())
   }, [])
 
-  const storageData = JSON.parse(localStorage.getItem('movie'))
-  const favList = storageData ? storageData : []
 
 
-  const filteredMovies = movies.filter(item => favList.includes(item.id))
+  const filteredMovies = () => {
+    const storageData = JSON.parse(localStorage.getItem('movie'))
+    const favList = storageData ? storageData : []
+
+    return favList
+  }
 
 
 
   return (
     <main>
       <div className="container">
-        <MoviesList movies={filteredMovies} />
+        <MoviesList movies={filteredMovies()} />
       </div>
     </main>
   );

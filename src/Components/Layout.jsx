@@ -12,7 +12,6 @@ const Layout = () => {
 
           <ul className="App-header__menu">
             <li><Link to='/'>Main</Link></li>
-            <li><Link to='/movies'>Movies</Link></li>
             <li><Link to='/favorites'>Favorites</Link></li>
           </ul>
         </div>

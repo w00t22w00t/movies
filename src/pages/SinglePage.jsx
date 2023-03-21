@@ -2,25 +2,32 @@ import React from 'react';
 
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 import '../styles/SinglePage.scss';
 import FavoritesBttn from '../Components/FavoritesBttn';
 
+import { getRecommendations } from "../features/movieSlice";
+import Recommendation from './../Components/Recommendation';
+
 const SinglePage = () => {
+  const dispatch = useDispatch();
   const {id} = useParams();
   const [movie, setMovie] = useState([]);
   
-
+  const {recommendations} = useSelector(state => state.movies)
 
   
 
-  console.log('render') // 3 times?
+  console.log('recommendations', recommendations) // 3 times?
 
 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US`)
       .then(res => res.json())
       .then(data => setMovie(data))
+    
+    dispatch(getRecommendations(id))
 
   }, [id]);
 
@@ -49,6 +56,9 @@ const SinglePage = () => {
           </div>
         </div>
       </section>
+
+      <Recommendation movies={recommendations} />
+      
     </main>
   );
 };
