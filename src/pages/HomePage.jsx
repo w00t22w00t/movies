@@ -1,17 +1,17 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import '../styles/HomePage.scss';
 
 import MoviesList from './../Components/MoviesList';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMovies, getGenres, setFetching, setCurrentPage } from "../features/movieSlice";
+import { getMovies, getGenres, setFetching, setCurrentPage, getSearchMovies } from "../features/movieSlice";
 import MoviesFilter from '../Components/MoviesFilter';
-import { useState } from 'react';
 
 
 const HomePage = () => {
 
   const dispatch = useDispatch();
-  const { loading, filteredMovies, fetching, movies, currentPage } = useSelector(state => state.movies)
+  const { loading, filteredMovies, fetching, movies, currentPage, search } = useSelector(state => state.movies)
+
   
 
   useEffect(() => {
@@ -25,9 +25,16 @@ const HomePage = () => {
 
   useEffect(() => {
     if (fetching) {
-      dispatch(setCurrentPage())
-      dispatch(getMovies(currentPage))
+      dispatch(setCurrentPage(currentPage + 1))
+
+      if (search.length) {
+        dispatch(getSearchMovies({word: search, page: currentPage}))
+      } else {
+        dispatch(getMovies(currentPage))
+      }
     }
+
+    
     
   }, [fetching])
 
@@ -37,7 +44,6 @@ const HomePage = () => {
     if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
       dispatch(setFetching(true))
     }
-      
   }
 
 
@@ -60,5 +66,4 @@ export default HomePage;
 
 
 // todo
-// 1. переделать поиск
-// 2. добавить похожие фильмы (доделать стили)
+// 1. переделать поиск (доделать подгрузку при активном поиске)

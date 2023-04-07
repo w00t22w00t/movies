@@ -9,7 +9,8 @@ const initialState = {
   loading: false,
   fetching: true,
   currentPage: 1,
-  recommendations: []
+  recommendations: [],
+  search: ''
 }
 
 export const getMovies = createAsyncThunk(
@@ -37,11 +38,20 @@ export const getGenres = createAsyncThunk(
   }
 )
 
+export const getSearchMovies = createAsyncThunk(
+  'movies/getSearchMovies',
+  async (searchParams, {rejectWithValue, dispatch}) => {
+    const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US&query=${searchParams.word}&page=${searchParams.page}&include_adult=false`)
+    searchParams.page === 1 ? dispatch(setMovies(res.data)) :  dispatch(updateMovies(res.data))
+  }
+)
+
 export const movieSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
     setMovies: (state, action) => {
+      console.log(action.payload)
       state.movies = action.payload.results
       state.filteredMovies = action.payload.results
     },
@@ -49,11 +59,8 @@ export const movieSlice = createSlice({
       state.movies = [...state.movies, ...action.payload.results]
       state.filteredMovies = [...state.filteredMovies, ...action.payload.results]
     },
-    searchMovies: (state, action) => {
-      state.filteredMovies = state.movies.filter(function(item, index) {
-        return item.title.toLowerCase().includes(action.payload.word.toLowerCase()) && 
-        (item.genre_ids.includes(action.payload.genre.id) || action.payload.genre.value == 'all');
-      })
+    setSearch: (state, action) => {
+      state.search = action.payload
     },
     setGenres: (state, action) => {
       state.genres = action.payload.genres
@@ -62,7 +69,7 @@ export const movieSlice = createSlice({
       state.fetching = action.payload;
     },
     setCurrentPage: (state, action) => {
-      state.currentPage = state.currentPage + 1
+      state.currentPage = action.payload
     },
     setRecommendations: (state, action) => {
       state.recommendations = action.payload.results
@@ -78,9 +85,22 @@ export const movieSlice = createSlice({
     },
     [getMovies.rejected]: (state) => {
       state.loading = false
-    }
+    },
+
+    [getSearchMovies.fulfilled]: (state) => {
+      state.fetching = false
+      state.loading = false
+    },
+    [getSearchMovies.pending]: (state) => {
+      state.loading = true
+
+      console.log('getSearchMovies pending')
+    },
+    [getSearchMovies.rejected]: (state) => {
+      state.loading = false
+    },
   }
 })
 
-export const {setMovies, updateMovies, searchMovies, setGenres, setFetching, setCurrentPage, setRecommendations} = movieSlice.actions
+export const {setMovies, updateMovies, setSearch, setGenres, setFetching, setCurrentPage, setRecommendations} = movieSlice.actions
 export default movieSlice.reducer

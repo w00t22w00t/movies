@@ -1,19 +1,54 @@
+@import 'utils';
+
 .recommendation {
   margin: 3.6rem 0;
 
   &__img {
-    width: 100%;
-
+    width: 15rem;
+    height: 22.5rem;
+    cursor: pointer;
+    
     img {
       width: 100%;
+      height: 100%;
+    }
+
+    &-title {
+      display: block;
+      margin-top: 0.8rem;
+      font-size: 1.4rem;
     }
   }
 }
 
 .swiper {
   margin-top: 1.6rem;
+
+  &-slide {
+    width: 15rem;
+  }
+
+  &-wrapper {
+    padding-bottom: 3rem;
+  }
+
+  &-pagination-bullet {
+    background: #FFFFFF;
+  }
 }
 
 footer {
   margin-top: 3.6rem;
+}
+
+@include minw($sm-tablet) {
+  .recommendation {
+  
+    &__img {
+  
+      img {}
+    }
+  }
+  
+  .swiper {}
 }

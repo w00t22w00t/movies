@@ -4,8 +4,11 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FavoritesBttn from '../Components/FavoritesBttn';
 
+import noImg from './../images/no-image.png'
+
 const MoviesItem = ({movie}) => {
   const genres = useSelector(state => state.movies.genres)
+  const image = movie.poster_path ? 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + movie.poster_path : noImg
 
   const getGenreList = () => {
     let genreList = genres.filter((item) => movie?.genre_ids?.includes(item.id)) // дает ошибку 2 запроса
@@ -19,7 +22,7 @@ const MoviesItem = ({movie}) => {
     <li className="movies-list__item">
       <div className="movies-list__img">
         <FavoritesBttn movie={movie} />
-         <img src={'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + movie.poster_path}></img>
+         <img src={image}></img>
       </div>
         <p className="movies-list__description">
           <span className="movies-list__year">{movie.release_date}</span>

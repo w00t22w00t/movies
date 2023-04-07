@@ -1,11 +1,14 @@
+@import 'utils';
+
 .movie {
   & > .container {
-    margin-top: 4.8rem;
-    display: flex;
+    margin-top: 3.6rem;
   }
 
   &__img {
     position: relative;
+    width: 30rem;
+    height: 45rem;
 
     & img {}
   }
@@ -25,11 +28,11 @@
   }
 
   &__content {
-    margin-left: 3.6rem;
+    margin-top: 1.2rem;
   }
 
   &__title {
-    font-size: 3.6rem;
+    font-size: 2.4rem;
   }
 
   &__info {
@@ -41,4 +44,62 @@
   }
 
   
+}
+
+@include minw($lg-mob) {
+  .movie {
+    & > .container {
+      margin-top: 4.8rem;
+      display: flex;
+    }
+  
+    &__img {
+  
+      & img {}
+    }
+  
+    &__fav-icon {}
+  
+    &__content {
+      margin-top: 0;
+      margin-left: 2.4rem;
+    }
+  
+    &__title {
+      // font-size: 3.6rem;
+    }
+  
+    &__info {}
+  
+    &__description {}
+  
+    
+  }
+}
+
+@include minw($tablet) {
+  .movie {
+    & > .container {}
+  
+    &__img {
+  
+      & img {}
+    }
+  
+    &__fav-icon {}
+  
+    &__content {
+      margin-left: 3.6rem;
+    }
+  
+    &__title {
+      font-size: 3.6rem;
+    }
+  
+    &__info {}
+  
+    &__description {}
+  
+    
+  }
 }

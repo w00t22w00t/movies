@@ -8,7 +8,10 @@ const MoviesList = ({ movies }) => {
   return (
     <ul className="movies-list">
       {
-        movies.map((item, index) => <MoviesItem movie={item} key={item.id} />)
+        movies.length ?
+          movies.map((item, index) => <MoviesItem movie={item} key={item.id} />)
+          : 
+          <p>List is empty :o</p>
       }
     </ul>
   );

@@ -8,7 +8,7 @@ const Layout = () => {
     <div className="App">
       <header className="App-header">
         <div className="container">
-          <h1 className='App-header__logo'>Movies List</h1>
+          <h1 className='App-header__logo'>Movies App</h1>
 
           <ul className="App-header__menu">
             <li><Link to='/'>Main</Link></li>

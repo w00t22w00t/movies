@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
+import { Pagination } from 'swiper';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 import '../styles/Recommendation.scss';
 
@@ -16,18 +16,26 @@ import noImg from './../images/no-image.png'
 
 
 const Recommendation = ({ movies }) => {
+
+
   return (
     <section className="recommendation">
+      {
+        !movies.length ? 
         <div className="container">
+          <p>No recommendation yet.</p>
+        </div>
+          :
+          <div className="container">
           <h3>Recommendation: </h3>
             <Swiper
-              modules={[Navigation]}
-              spaceBetween={50}
-              slidesPerView={3}
+              modules={[Pagination]}
+              spaceBetween={30}
+              slidesPerView={"auto"}
               onSlideChange={() => console.log('slide change')}
               onSwiper={(swiper) => console.log(swiper)}
               navigation
-              pagination={{ clickable: true }}
+              pagination={{ dynamicBullets: true, clickable: true }}
             >
               {
             movies.map(movie => {
@@ -37,8 +45,8 @@ const Recommendation = ({ movies }) => {
                       <div className="recommendation__img">
                         <img src={image}></img>
                       </div>
-                      <Link className="recommendation__img__title" to={`/movie/${movie.id}`}>{movie.title}</Link>
-                      <h4>{ movie.title }</h4>
+                      <Link className="recommendation__img-title" to={`/movie/${movie.id}`}>{movie.title}</Link>
+                      {/* <h4>{ movie.title }</h4> */}
                     </SwiperSlide>
                   )
                 })
@@ -46,6 +54,9 @@ const Recommendation = ({ movies }) => {
             
             </Swiper>
         </div>
+      }
+      
+        
       </section>
     
   );

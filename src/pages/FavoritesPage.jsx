@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import '../styles/FavoritesPage.scss';
+
+import { useDispatch } from 'react-redux';
 import MoviesList from '../Components/MoviesList';
-import { getMovies, getGenres } from "../features/movieSlice";
+import { getGenres } from "../features/movieSlice";
 
 const FavoritesPage = () => {
   const dispatch = useDispatch()
-  // const {movies, favList} = useSelector(state => state.movies)
 
   useEffect(() => {
     dispatch(getGenres())
@@ -23,8 +24,9 @@ const FavoritesPage = () => {
 
 
   return (
-    <main>
+    <main className="favorites">
       <div className="container">
+        <h2 className='favorites__title'>Favorites List</h2>
         <MoviesList movies={filteredMovies()} />
       </div>
     </main>

@@ -1,0 +1,15 @@
+@import 'utils';
+
+.favorites {
+
+
+  &__title {
+    margin-top: 2.4rem;
+  }
+
+  & .movies-list {
+    justify-content: flex-start;
+  }
+}
+
+
