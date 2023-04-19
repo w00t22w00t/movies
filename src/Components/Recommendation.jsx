@@ -46,7 +46,6 @@ const Recommendation = ({ movies }) => {
                         <img src={image}></img>
                       </div>
                       <Link className="recommendation__img-title" to={`/movie/${movie.id}`}>{movie.title}</Link>
-                      {/* <h4>{ movie.title }</h4> */}
                     </SwiperSlide>
                   )
                 })

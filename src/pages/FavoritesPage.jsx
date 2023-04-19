@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import '../styles/FavoritesPage.scss';
 
 import { useDispatch } from 'react-redux';
@@ -21,13 +21,15 @@ const FavoritesPage = () => {
     return favList
   }
 
+  const memoFilteredMovies = useMemo(() => filteredMovies(), [])
+
 
 
   return (
     <main className="favorites">
       <div className="container">
         <h2 className='favorites__title'>Favorites List</h2>
-        <MoviesList movies={filteredMovies()} />
+        <MoviesList movies={memoFilteredMovies} />
       </div>
     </main>
   );

@@ -1,39 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaSearch } from 'react-icons/fa';
-import Select from 'react-select';
 
 import { getMovies, getSearchMovies, setSearch, setCurrentPage } from "../features/movieSlice";
 
 const MoviesFilter = () => {
   const dispatch = useDispatch();
-  const {search, currentPage} = useSelector(state => state.movies)
+  const { search, currentPage } = useSelector(state => state.movies)
+  const [input, setInput] = useState('')
   
-  function searchMovieWord(searchWord) {
-    dispatch(setCurrentPage(1))
-    dispatch(setSearch(searchWord))
+  React.useEffect(() => {
+    const getData = setTimeout(() => {
+      dispatch(setCurrentPage(1))
+      dispatch(setSearch(input))
 
-    if (searchWord.length) {
-      dispatch(getSearchMovies({word: searchWord, page: 1}))
-    } else {
-      dispatch(getMovies(currentPage))
-    }
-  }
+      if (input.length) {
+        dispatch(getSearchMovies({word: input, page: 1}))
+      } else {
+        dispatch(getMovies(currentPage))
+      }
+    }, 500)
 
-  // function searchMovieGenre(searchWord) {
-  //   dispatch(searchMovies(searchWord))
-  //   setSearch({...search, genre: searchWord.genre})
-  // }
-
-  // const customGenres = genres.map(item => {
-  //   return {
-  //     value: item.name,
-  //     label: item.name,
-  //     id: item.id
-  //   }
-  // })
-
-  // customGenres.splice(0, 0, {value: 'all', label: 'All'});
+    return () => clearTimeout(getData)
+  }, [input])
+  
 
   return (
     <div className="movies-filter">
@@ -44,16 +34,10 @@ const MoviesFilter = () => {
         <input 
           type="text" 
           placeholder='Search...'
-          value={search}
-          onChange={(e) => searchMovieWord(e.target.value)}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         />
       </div>
-      {/* <Select 
-        placeholder='Genres' 
-        className='movies-filter__filterby' 
-        options={customGenres}
-        onChange={(selectedOption) => searchMovieGenre({ ...search, genre: selectedOption })}     
-      />   */}
     </div>
   );
 };

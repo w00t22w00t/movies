@@ -13,7 +13,8 @@ const FavoritesBttn = ({ movie }) => {
     setIsFav(favList.filter(item => item.id == movie.id).length ? true : false)
   }, []);
 
-  function toggleToFav() {
+  function toggleToFav(e) {
+    e.preventDefault();
     const storageData = JSON.parse(localStorage.getItem('movie'))
     const favList = storageData ? storageData : []
 
@@ -40,7 +41,7 @@ const FavoritesBttn = ({ movie }) => {
   return (
     <button
       className="movie__fav-icon"
-      onClick={() => toggleToFav()}>
+      onClick={(e) => toggleToFav(e)}>
       {
         isFav ? <FaHeart /> : <FaRegHeart />
       }

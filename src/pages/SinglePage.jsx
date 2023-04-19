@@ -17,13 +17,10 @@ const SinglePage = () => {
   
   const {recommendations} = useSelector(state => state.movies)
 
-  
-
-  console.log('recommendations', recommendations) // 3 times?
-
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US`)
+    console.log(process.env)
+    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
       .then(res => res.json())
       .then(data => setMovie(data))
     

@@ -5,7 +5,7 @@ import axios from "axios"
 const initialState = {
   movies: [],
   filteredMovies: [],
-  genres: [], // а нужно ли?
+  genres: [],
   loading: false,
   fetching: true,
   currentPage: 1,
@@ -17,7 +17,7 @@ export const getMovies = createAsyncThunk(
   'movies/getMovies',
   async (currentPage, { rejectWithValue, dispatch }) => {
     console.log(currentPage)
-    const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US&page=${currentPage}`)
+    const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${currentPage}`)
     currentPage === 1 ? dispatch(setMovies(res.data)) :  dispatch(updateMovies(res.data))
   }
 )
@@ -25,7 +25,7 @@ export const getMovies = createAsyncThunk(
 export const getRecommendations = createAsyncThunk(
   'movies/getRecommendations',
   async (movie_id, { rejectWithValue, dispatch }) => {
-    const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/recommendations?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US&page=1`)
+    const res = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/recommendations?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
     dispatch(setRecommendations(res.data))
   }
 )
@@ -33,7 +33,7 @@ export const getRecommendations = createAsyncThunk(
 export const getGenres = createAsyncThunk(
   'movies/getGenres',
   async (_, {rejectWithValue, dispatch}) => {
-    const res = await axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US')
+    const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
     dispatch(setGenres(res.data))
   }
 )
@@ -41,7 +41,7 @@ export const getGenres = createAsyncThunk(
 export const getSearchMovies = createAsyncThunk(
   'movies/getSearchMovies',
   async (searchParams, {rejectWithValue, dispatch}) => {
-    const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=26ac3f2370b5a5e3c4c1c1973e8006c4&language=en-US&query=${searchParams.word}&page=${searchParams.page}&include_adult=false`)
+    const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${searchParams.word}&page=${searchParams.page}&include_adult=false`)
     searchParams.page === 1 ? dispatch(setMovies(res.data)) :  dispatch(updateMovies(res.data))
   }
 )

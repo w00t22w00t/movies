@@ -63,7 +63,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-// todo
-// 1. переделать поиск (доделать подгрузку при активном поиске)
