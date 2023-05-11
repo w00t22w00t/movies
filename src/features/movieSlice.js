@@ -16,7 +16,6 @@ const initialState = {
 export const getMovies = createAsyncThunk(
   'movies/getMovies',
   async (currentPage, { rejectWithValue, dispatch }) => {
-    console.log(currentPage)
     const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${currentPage}`)
     currentPage === 1 ? dispatch(setMovies(res.data)) :  dispatch(updateMovies(res.data))
   }
@@ -51,7 +50,6 @@ export const movieSlice = createSlice({
   initialState,
   reducers: {
     setMovies: (state, action) => {
-      console.log(action.payload)
       state.movies = action.payload.results
       state.filteredMovies = action.payload.results
     },
@@ -93,8 +91,6 @@ export const movieSlice = createSlice({
     },
     [getSearchMovies.pending]: (state) => {
       state.loading = true
-
-      console.log('getSearchMovies pending')
     },
     [getSearchMovies.rejected]: (state) => {
       state.loading = false
