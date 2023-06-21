@@ -10,8 +10,8 @@ const FavoritesBttn = ({ movie }) => {
     const storageData = JSON.parse(localStorage.getItem('movie'))
     const favList = storageData ? storageData : []
     
-    setIsFav(favList.filter(item => item.id == movie.id).length ? true : false)
-  }, []);
+    setIsFav(favList.filter(item => item.id === movie.id).length ? true : false)
+  }, [movie]);
 
   function toggleToFav(e) {
     e.preventDefault();
@@ -19,8 +19,8 @@ const FavoritesBttn = ({ movie }) => {
     const favList = storageData ? storageData : []
 
 
-    if(favList.filter(item => item.id == movie.id).length) {
-      const newFavList = favList.filter(item => item.id != movie.id)
+    if(favList.filter(item => item.id === movie.id).length) {
+      const newFavList = favList.filter(item => item.id !== movie.id)
       localStorage.setItem('movie', JSON.stringify(newFavList));
       setIsFav(false)
     } else {
