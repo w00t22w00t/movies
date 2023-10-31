@@ -27,12 +27,12 @@ const MoviesItem = ({movie}) => {
           <FavoritesBttn movie={movie} />
           <img src={image}></img>
         </div>
-          <p className="movies-list__description">
-            <span className="movies-list__year">{movie.release_date}</span>
-            &#9900;
-            <span className="movies-list__genre">{movie.vote_average}/10</span>
-          </p>
         <p className="movies-list__title">{movie.title}</p>
+        <p className="movies-list__description">
+          <span className="movies-list__year">{movie.release_date}</span>
+          &#9900;
+          <span className="movies-list__genre">{movie.vote_average}/10</span>
+        </p>
         <p className='movies-list__genres'>{memoGenreList}.</p>
       </Link>
     </li>

@@ -19,6 +19,12 @@
     right: 1.2rem;
     width: 2rem;
     height: 2rem;
+    color: #FFF;
+    transition: transform .2s linear;
+
+    &:hover {
+      transform: scale(1.2);
+    }
 
     & svg {
       display: block;

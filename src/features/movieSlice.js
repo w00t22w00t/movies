@@ -54,8 +54,12 @@ export const movieSlice = createSlice({
       state.filteredMovies = action.payload.results
     },
     updateMovies: (state, action) => {
-      state.movies = [...state.movies, ...action.payload.results]
-      state.filteredMovies = [...state.filteredMovies, ...action.payload.results]
+      const nonExistingElements = action.payload.results.filter(targetObj =>
+        !state.movies.some(obj => obj.id === targetObj.id)
+      );
+
+      state.movies = [...state.movies, ...nonExistingElements]
+      state.filteredMovies = [...state.filteredMovies, ...nonExistingElements]
     },
     setSearch: (state, action) => {
       state.search = action.payload

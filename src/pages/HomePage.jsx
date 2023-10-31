@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
-import '../styles/HomePage.scss';
 
-import MoviesList from './../Components/MoviesList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovies, getGenres, setFetching, setCurrentPage, getSearchMovies } from "../features/movieSlice";
+
+import '../styles/HomePage.scss';
+import MoviesList from './../Components/MoviesList';
 import MoviesFilter from '../Components/MoviesFilter';
 
 
@@ -51,8 +52,7 @@ const HomePage = () => {
     <main>
         <section className="movies">
           <div className="container">
-            <h2 className="movies__title">Popular movies</h2>
-            <MoviesFilter />
+            <MoviesFilter title={'Popular movies'} />
             {
               loading && movies.length === 0 ? <h1>Loading</h1> : <MoviesList movies={filteredMovies} />
             }

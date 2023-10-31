@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 
 import { getMovies, getSearchMovies, setSearch, setCurrentPage } from "../features/movieSlice";
 
-const MoviesFilter = () => {
+const MoviesFilter = ({title}) => {
   const dispatch = useDispatch();
   const { search, currentPage } = useSelector(state => state.movies)
   const [input, setInput] = useState('')
@@ -27,8 +27,7 @@ const MoviesFilter = () => {
 
   return (
     <div className="movies-filter">
-      <h3 className="movies-filter__title">Filter by:</h3>
-      <div className="movies-filter__line"></div>
+      <h2 className="movies-filter__title">{title}</h2>
       <div className='movies-filter__search'>
         <FaSearch />
         <input 

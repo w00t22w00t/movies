@@ -6,16 +6,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  gap: 4rem 2rem;
 
   
 
   &__item {
     max-width: 30rem;
 
-    @include maxw(599px) {
-      &:not(:first-of-type) {
-        margin-top: 2.4rem;
-      }
+    &:hover {
+      color: #cdcdcd;
     }
   }
 
@@ -32,8 +31,15 @@
     }
   }
 
+  &__title {
+    margin-top: 1.2rem;
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
   &__description {
-    margin-top: 0.8rem;
+    margin-top: 0.4rem;
 
     & span {}
   }
@@ -42,13 +48,8 @@
 
   &__genre {}
 
-  &__title {
-    margin-top: 0.4rem;
-    display: block;
-  }
-
   &__genres {
-    margin-top: 1rem;
+    margin-top: 0.4rem;
   }  
 }
 
@@ -56,11 +57,9 @@
 @include minw($lg-mob) {
   .movies-list {
     
-  
     &__item {
-      margin: 1rem;
-      margin-bottom: 3rem;
-      width: calc(50% - 2rem);
+      max-width: none;
+      width: calc(50% - 1rem);
     }
   
     &__img {
@@ -68,7 +67,6 @@
     }
   
     &__description {
-      margin-top: 1rem;
   
       & span {}
     }
@@ -84,22 +82,61 @@
   
 }
 
-@include minw($sm-pc) {
+@include minw(900px) {
   .movies-list {
-    
   
     &__item {
-      margin: 1rem;
-      margin-bottom: 3rem;
-      width: calc(25% - 2rem);
+      width: calc(33% - 4rem/3);
+    }
+  }
+}
+
+@include minw($sm-pc) {
+  .movies-list {
+    margin-top: 3.6rem;
+    justify-content: space-between;
+    gap: 5rem 3rem;
+  
+    &__item {
+      width: calc(33% - 2rem);
     }
   
     &__img {
-      height: 40rem;
+      height: 45rem;
     }
   
     &__description {
       margin-top: 1rem;
+  
+      & span {}
+    }
+  
+    &__year {}
+  
+    &__genre {}
+  
+    &__title {
+      font-size: 2rem;
+    }
+  
+    &__genres {}  
+  }
+}
+
+@include minw($pc) {
+  .movies-list {
+    margin-top: 3.6rem;
+    justify-content: space-between;
+  
+    &__item {
+      width: calc(25% - 9rem/4);
+    }
+  
+    &__img {
+      height: 45rem;
+    }
+  
+    &__description {
   
       & span {}
     }
